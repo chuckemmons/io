@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import com.cee.file.csv.CSVFormat;
 import com.cee.file.csv.CSVRecord;
+import com.cee.file.csv.criteria.condition.EqCondition;
 
 
 public class ParseMultiValueCsvTest {
@@ -57,5 +59,19 @@ public class ParseMultiValueCsvTest {
 				System.out.println("\t\t" + string);
 			}
 		}
+	}
+	
+	@Test
+	public void testCondition() {
+		Assert.assertNotNull(records);
+		Assert.assertTrue(records.iterator().hasNext());
+		List<CSVRecord> myRecords = new ArrayList<CSVRecord>();
+		for(CSVRecord record : records) {
+			EqCondition eq = new EqCondition("Custom field (Assigned Developer)", "Chuck");
+			if (eq.isTrue(record)) {
+				myRecords.add(record);
+			}
+		}
+		System.out.println(myRecords);
 	}
 }
