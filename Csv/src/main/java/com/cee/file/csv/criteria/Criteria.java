@@ -1,23 +1,20 @@
 package com.cee.file.csv.criteria;
 
-import java.util.List;
-
 import com.cee.file.csv.CSVRecord;
-import com.cee.file.csv.criteria.expression.Expression;
 
 public class Criteria {
 	
-	public List<Expression> expressions;
+	private Logical expression;
 	
-	public boolean meetsCriteria(CSVRecord record) {
-		if (record == null || expressions == null) {
+	public Criteria(Logical expression){
+		this.expression = expression;
+	}
+	
+	public boolean isMet(CSVRecord record) {
+		if (record == null || expression == null) {
 			return false;
 		}
-		/*for (Expression expression : expressions) {
-			if (expression.isFalse(record)) {
-				return false;
-			}
-		}*/
-		return true;
+
+		return expression.evaluate(record);
 	}
 }

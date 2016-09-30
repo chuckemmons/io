@@ -36,6 +36,8 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 
+import com.cee.file.csv.criteria.Criteria;
+
 /**
  * Parses CSV files according to the specified format.
  *
@@ -151,10 +153,10 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
      * @throws IOException
      *             If an I/O error occurs
      */
-    public static CSVParser parse(final File file, final Charset charset, final CSVFormat format) throws IOException {
+    public static CSVParser parse(final File file, final Charset charset, final CSVFormat format, final Criteria criteria) throws IOException {
         Assertions.notNull(file, "file");
         Assertions.notNull(format, "format");
-        return new CSVParser(new InputStreamReader(new FileInputStream(file), charset), format);
+        return new CSVParser(new InputStreamReader(new FileInputStream(file), charset), format, criteria);
     }
 
     /**
@@ -214,10 +216,14 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
     /*private final Map<String, Integer> headerMap;*/
 
     private final Lexer lexer;
+    
+    private final Criteria criteria;
 
     /** A record buffer for getRecord(). Grows as necessary and is reused. */
     private final List<String> record = new ArrayList<String>();
 
+    
+    
     /**
      * The next record number to assign.
      */
@@ -249,7 +255,30 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
      *             If there is a problem reading the header or skipping the first record
      */
     public CSVParser(final Reader reader, final CSVFormat format) throws IOException {
-        this(reader, format, 0, 1);
+        this(reader, format, null, 0, 1);
+    }
+    
+    /**
+     * Customized CSV parser using the given {@link CSVFormat}
+     *
+     * <p>
+     * If you do not read all records from the given {@code reader}, you should call {@link #close()} on the parser,
+     * unless you close the {@code reader}.
+     * </p>
+     *
+     * @param reader
+     *            a Reader containing CSV-formatted input. Must not be null.
+     * @param format
+     *            the CSVFormat used for CSV parsing. Must not be null.
+     * @param criteria
+     * 			  the Criteria to apply against the records. Will filter results based on the criteria provided.
+     * @throws IllegalArgumentException
+     *             If the parameters of the format are inconsistent or if either reader or format are null.
+     * @throws IOException
+     *             If there is a problem reading the header or skipping the first record
+     */
+    public CSVParser(final Reader reader, final CSVFormat format, final Criteria criteria) throws IOException {
+        this(reader, format, criteria, 0, 1);
     }
 
     /**
@@ -274,7 +303,7 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
      *             If there is a problem reading the header or skipping the first record
      * @since 1.1
      */
-    public CSVParser(final Reader reader, final CSVFormat format, final long characterOffset, final long recordNumber)
+    public CSVParser(final Reader reader, final CSVFormat format, final Criteria criteria, final long characterOffset, final long recordNumber)
             throws IOException {
         Assertions.notNull(reader, "reader");
         Assertions.notNull(format, "format");
@@ -282,6 +311,7 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
         this.format = format;
         this.lexer = new Lexer(format, new ExtendedBufferedReader(reader));
         this.headerMap = this.initializeHeader();
+        this.criteria = criteria;
         this.characterOffset = characterOffset;
         this.recordNumber = recordNumber - 1;
     }
@@ -416,7 +446,7 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
                 }
             }
         }
-        System.out.println("==== hdrMap =====\n" + hdrMap);
+        //System.out.println("==== hdrMap =====\n" + hdrMap);
         return hdrMap;
     }
 
@@ -537,6 +567,10 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
             final String comment = sb == null ? null : sb.toString();
             result = new CSVRecord(this.record.toArray(new String[this.record.size()]), this.headerMap, comment,
                     this.recordNumber, startCharPosition);
+            
+            if(criteria != null && !criteria.isMet(result)) {
+            	return nextRecord();
+            }
         }
         return result;
     }

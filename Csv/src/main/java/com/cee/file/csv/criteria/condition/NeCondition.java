@@ -7,13 +7,13 @@ import java.util.List;
 import com.cee.file.csv.CSVRecord;
 import com.cee.file.csv.criteria.Logical;
 
-public class EqCondition extends SingleValueCondition implements Logical {
-	
-	protected EqCondition(String columnName, String value) {
+public class NeCondition extends SingleValueCondition implements Logical {
+
+	protected NeCondition(String columnName, String value) {
 		super(columnName, value);
 	}
 	
-	protected EqCondition(String columnName, float value) {
+	protected NeCondition(String columnName, float value) {
 		super(columnName, value);
 	}
 	
@@ -29,7 +29,7 @@ public class EqCondition extends SingleValueCondition implements Logical {
 	 * @param dateFormat
 	 * 			the format of the date contained in the record.
 	 */
-	protected EqCondition(String columnName, Date value, DateFormat dateFormat) {
+	protected NeCondition(String columnName, Date value, DateFormat dateFormat) {
 		super(columnName, value, dateFormat);
 	}
 	
@@ -47,33 +47,23 @@ public class EqCondition extends SingleValueCondition implements Logical {
 	 * @param dateFieldToInclude
 	 * 			the date field to include in the comparison. null value meaning all date fields will be compared.
 	 */
-	protected EqCondition(String columnName, Date value, DateFormat dateFormat, int dateFieldToInclude) {
+	protected NeCondition(String columnName, Date value, DateFormat dateFormat, int dateFieldToInclude) {
 		super(columnName, value, dateFormat, dateFieldToInclude);
 	}
+
 	
-	@Override
-	protected boolean evaluateString(CSVRecord record) {
-		List<String> values = record.getAllValuesFor(columnName);
-		for (String oValue : values) {
-			if (stringValue.equals(oValue)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	@Override
+	@Override	
 	protected boolean evaluateDate(CSVRecord record) {
 		List<String> strValues = record.getAllValuesFor(columnName);
 		
 		for (String strValue : strValues) {
 			Date recordDate = getDateFromRecordValue(strValue);
-			if (recordDate.equals(dateValue)) {
-				return true;
+			if (recordDate.equals(this.dateValue)) {
+				return false;
 			}
 		}
 		
-		return false;
+		return true;
 	}
 	
 	@Override
@@ -83,11 +73,22 @@ public class EqCondition extends SingleValueCondition implements Logical {
 		for (String strValue : strValues) {
 			Float recordValue = getFloatFromRecordValue(strValue);
 			if (recordValue == floatValue) {
-				return true;
+				return false;
 			}
 		}
 		
-		return false;
+		return true;
+	}
+	
+	@Override
+	protected boolean evaluateString(CSVRecord record) {
+		List<String> values = record.getAllValuesFor(columnName);
+		for (String oValue : values) {
+			if (stringValue.equals(oValue)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

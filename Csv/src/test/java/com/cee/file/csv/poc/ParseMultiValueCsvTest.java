@@ -13,7 +13,8 @@ import org.junit.Test;
 
 import com.cee.file.csv.CSVFormat;
 import com.cee.file.csv.CSVRecord;
-import com.cee.file.csv.criteria.condition.EqCondition;
+import com.cee.file.csv.criteria.Logical;
+import com.cee.file.csv.criteria.condition.Condition;
 
 
 public class ParseMultiValueCsvTest {
@@ -29,7 +30,7 @@ public class ParseMultiValueCsvTest {
 		try {
 			reader = new FileReader(path);
 		} catch (FileNotFoundException fnfe) {
-			System.out.println("Could not find file: " + path);
+			//System.out.println("Could not find file: " + path);
 			fnfe.printStackTrace();
 		}
 		
@@ -37,7 +38,7 @@ public class ParseMultiValueCsvTest {
 		try {
 			records = csvFormat.parse(reader);
 		} catch (IOException ioe) {
-			System.out.println("Unable to parse file: " + path);
+			//System.out.println("Unable to parse file: " + path);
 			ioe.printStackTrace();
 		}
 	}
@@ -47,16 +48,16 @@ public class ParseMultiValueCsvTest {
 		Assert.assertNotNull(records);
 		Assert.assertTrue(records.iterator().hasNext());
 		for (CSVRecord csvRecord : records) {
-			System.out.println("CSVRecord: " + csvRecord.getSingleValueFor("Issue key"));
+			//System.out.println("CSVRecord: " + csvRecord.getSingleValueFor("Issue key"));
 			List<String> workLog = csvRecord.getAllValuesFor("Log Work");
-			System.out.println("\tworkLog:");
+			//System.out.println("\tworkLog:");
 			for (String string : workLog) {
-				System.out.println("\t\t" + string);
+				//System.out.println("\t\t" + string);
 			}
 			List<String> developers = csvRecord.getAllValuesFor("Custom field (Assigned Developer)");
 			System.out.println("\tdeveloper(s):");
 			for (String string : developers) {
-				System.out.println("\t\t" + string);
+				//System.out.println("\t\t" + string);
 			}
 		}
 	}
@@ -67,11 +68,12 @@ public class ParseMultiValueCsvTest {
 		Assert.assertTrue(records.iterator().hasNext());
 		List<CSVRecord> myRecords = new ArrayList<CSVRecord>();
 		for(CSVRecord record : records) {
-			EqCondition eq = new EqCondition("Custom field (Assigned Developer)", "Chuck");
-			if (eq.isTrue(record)) {
+			Logical eq = Condition.eq("Custom field (Assigned Developer)", "Chuck");
+			if (eq.evaluate(record)) {
+				//System.out.println("adding Record:\n\t" + record);
 				myRecords.add(record);
 			}
 		}
-		System.out.println(myRecords);
+		Assert.assertFalse(myRecords.isEmpty());
 	}
 }

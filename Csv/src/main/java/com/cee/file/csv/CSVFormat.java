@@ -39,6 +39,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.cee.file.csv.criteria.Criteria;
+
 /**
  * Specifies the format of a CSV file and parses input.
  *
@@ -844,6 +846,25 @@ public final class CSVFormat implements Serializable {
      */
     public CSVParser parse(final Reader in) throws IOException {
         return new CSVParser(in, this);
+    }
+    
+    /**
+     * Parses the specified content.
+     *
+     * <p>
+     * See also the various static parse methods on {@link CSVParser}.
+     * </p>
+     *
+     * @param in
+     *            the input stream
+     * @param criteria
+     * 			  the criteria to filter on.
+     * @return a parser over a stream of {@link CSVRecord}s.
+     * @throws IOException
+     *             If an I/O error occurs
+     */
+    public CSVParser parse(final Reader in, final Criteria criteria) throws IOException {
+        return new CSVParser(in, this, criteria);
     }
 
     /**

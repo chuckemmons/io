@@ -86,6 +86,10 @@ public final class CSVRecord implements Serializable, Iterable<String> {
         return values[i];
     }
 
+    public String getSingleValueFor(final Enum name) {
+    	return getSingleValueFor(name.toString());
+    }
+    
     public String getSingleValueFor(final String name) {
     	List<String> allValues = getAllValuesFor(name);
     	return allValues.isEmpty() ? null : allValues.get(0);
@@ -105,7 +109,7 @@ public final class CSVRecord implements Serializable, Iterable<String> {
      * @see CSVFormat#withNullString(String)
      */
     public List<String> getAllValuesFor(final String name) {
-    	System.out.println("CSVRecord.get name=" + name);
+    	//System.out.println("CSVRecord.get name=" + name);
         if (mapping == null) {
             throw new IllegalStateException(
                 "No header mapping was specified, the record values can't be accessed by name");
@@ -116,7 +120,7 @@ public final class CSVRecord implements Serializable, Iterable<String> {
                 mapping.keySet()));
         }*/
         final List<Integer> indices = mapping.get(name);
-        if (indices.isEmpty()) {
+        if (indices == null) {
             throw new IllegalArgumentException(String.format("Mapping for %s not found, expected one of %s", name,
                 mapping.keySet()));
         }
@@ -130,7 +134,7 @@ public final class CSVRecord implements Serializable, Iterable<String> {
         			valueList.add(values[index]);
         		}
 			}
-        	System.out.println("CSVRecord.get return=\n\t" + valueList);
+        	//System.out.println("CSVRecord.get return=\n\t" + valueList);
             return valueList;
         } catch (final ArrayIndexOutOfBoundsException e) {
             throw new IllegalArgumentException(String.format(
