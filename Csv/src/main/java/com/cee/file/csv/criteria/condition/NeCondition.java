@@ -9,13 +9,16 @@ import com.cee.file.csv.criteria.Logical;
 
 public class NeCondition extends SingleValueCondition implements Logical {
 
+	
 	protected NeCondition(String columnName, String value) {
 		super(columnName, value);
 	}
 	
+	
 	protected NeCondition(String columnName, float value) {
 		super(columnName, value);
 	}
+	
 	
 	/**
 	 * Compares the date without time fields. 
@@ -32,6 +35,7 @@ public class NeCondition extends SingleValueCondition implements Logical {
 	protected NeCondition(String columnName, Date value, DateFormat dateFormat) {
 		super(columnName, value, dateFormat);
 	}
+	
 	
 	/**
 	 * Compares the dates truncated after the dateFieldToInclude.
@@ -66,6 +70,7 @@ public class NeCondition extends SingleValueCondition implements Logical {
 		return true;
 	}
 	
+	
 	@Override
 	protected boolean evaluateFloat(CSVRecord record) {
 		List<String> strValues = record.getAllValuesFor(columnName);
@@ -80,14 +85,17 @@ public class NeCondition extends SingleValueCondition implements Logical {
 		return true;
 	}
 	
+	
 	@Override
 	protected boolean evaluateString(CSVRecord record) {
 		List<String> values = record.getAllValuesFor(columnName);
+		
 		for (String oValue : values) {
 			if (stringValue.equals(oValue)) {
 				return false;
 			}
 		}
+		
 		return true;
 	}
 

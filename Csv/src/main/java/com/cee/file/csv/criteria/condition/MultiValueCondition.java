@@ -17,7 +17,7 @@ public abstract class MultiValueCondition extends BaseCondition implements Logic
 	@Override
 	public boolean evaluate(CSVRecord record) {
 		if (stringValues != null) {
-			return evaluateString(record);
+			return evaluateStrings(record);
 		}
 		/*if (dateValue != null) {
 			return evaluateDate(record);
@@ -30,7 +30,7 @@ public abstract class MultiValueCondition extends BaseCondition implements Logic
 	}
 	
 	
-	protected abstract boolean evaluateString(CSVRecord record);
+	protected abstract boolean evaluateStrings(CSVRecord record);
 	
 	
 	//protected abstract boolean evaluateFloat(CSVRecord record);
