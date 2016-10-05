@@ -29,7 +29,7 @@ public class ContainsOneCondition extends MultiValueCondition implements Logical
 	}*/
 	
 	@Override
-	protected boolean evaluateString(CSVRecord record) {
+	protected boolean evaluateStrings(CSVRecord record) {
 		for (String stringValue : stringValues) {			
 			List<String> recordValues = record.getAllValuesFor(columnName);
 			

@@ -56,6 +56,7 @@ public class BetweenCondition extends BaseCondition implements Logical {
 				
 				if (isOnOrAfterBeginDate(recordDate)
 						&& isOnOrBeforeEndDate(recordDate)) {
+					
 					return true;
 				}
 			}
