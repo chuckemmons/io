@@ -86,13 +86,19 @@ public final class CSVRecord implements Serializable, Iterable<String> {
         return values[i];
     }
 
-    public String getSingleValueFor(final Enum name) {
+    @SuppressWarnings("rawtypes")
+	public String getSingleValueFor(final Enum name) {
     	return getSingleValueFor(name.toString());
     }
     
     public String getSingleValueFor(final String name) {
     	List<String> allValues = getAllValuesFor(name);
     	return allValues.isEmpty() ? null : allValues.get(0);
+    }
+    
+    @SuppressWarnings("rawtypes")
+	public List<String> getAllValuesFor(final Enum name) {
+    	return getAllValuesFor(name.toString());
     }
     
     /**
