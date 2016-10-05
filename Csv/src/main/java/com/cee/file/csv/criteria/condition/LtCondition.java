@@ -7,36 +7,43 @@ import java.util.List;
 import com.cee.file.csv.CSVRecord;
 import com.cee.file.csv.criteria.Logical;
 
-public class GtCondition extends SingleValueCondition implements Logical {
+public class LtCondition extends SingleValueCondition implements Logical {
 
-	
-	protected GtCondition(String columnName, float value) {
+	protected LtCondition(String columnName, float value) {
 		super(columnName, value);
 	}
 	
-	protected GtCondition(String columnName, Date value, DateFormat format) {
+	protected LtCondition(String columnName, Date value, DateFormat format) {
 		super(columnName, value, format);
 	}
 	
-	protected GtCondition(String columnName, Date value, DateFormat format, int dateFieldToInclude) {
+	protected LtCondition(String columnName, Date value, DateFormat format, int dateFieldToInclude) {
 		super(columnName, value, format, dateFieldToInclude);
 	}	
 	
+
+	@Override
+	@Deprecated
+	protected boolean evaluateString(CSVRecord record) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
+
 	@Override
 	protected boolean evaluateFloat(CSVRecord record) {
 		List<String> strValues = record.getAllValuesFor(columnName);
 		
 		for (String strValue : strValues) {
 			Float recordValue = getFloatFromRecordValue(strValue);
-			if (recordValue > floatValue) {
+			if (recordValue < floatValue) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	
+
 	@Override
 	protected boolean evaluateDate(CSVRecord record) {
 		List<String> strValues = record.getAllValuesFor(columnName);
@@ -44,21 +51,11 @@ public class GtCondition extends SingleValueCondition implements Logical {
 		for (String strValue : strValues) {
 			Date recordDate = getDateFromRecordValue(strValue);
 			
-			if (dateValue.after(recordDate)) {
+			if (dateValue.before(recordDate)) {
 				return true;
 			}
 		}
 		
-		return false;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.cee.file.csv.criteria.condition.SingleValueCondition#evaluateString(com.cee.file.csv.CSVRecord)
-	 */
-	@Override
-	@Deprecated
-	protected boolean evaluateString(CSVRecord record) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

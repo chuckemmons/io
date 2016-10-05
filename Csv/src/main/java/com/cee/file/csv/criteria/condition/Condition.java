@@ -17,6 +17,7 @@ public abstract class Condition {
 		return new ContainsOneCondition(columnName, values);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static Logical containsOne(Enum columnName, Collection<String> values) {
 		return new ContainsOneCondition(columnName.toString(), values);
 	}
@@ -66,9 +67,31 @@ public abstract class Condition {
 		return new GtCondition(columnName, value, format);
 	}
 	
+	@SuppressWarnings("rawtypes")
+	public static Logical gt(Enum columnName, Date value, DateFormat format) {
+		return new GtCondition(columnName.toString(), value, format);
+	}
+	
 	public static Logical gt(String columnName, Date value, DateFormat format, int dateFieldToInclude) {
 		return new GtCondition(columnName, value, format, dateFieldToInclude);
-	}	
+	}
+	
+	public static Logical lt(String columnName, float value) {
+		return new LtCondition(columnName, value);
+	}
+	
+	public static Logical lt(String columnName, Date value, DateFormat format) {
+		return new LtCondition(columnName, value, format);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static Logical lt(Enum columnName, Date value, DateFormat format) {
+		return new LtCondition(columnName.toString(), value, format);
+	}
+	
+	public static Logical lt(String columnName, Date value, DateFormat format, int dateFieldToInclude) {
+		return new LtCondition(columnName, value, format, dateFieldToInclude);
+	}		
 	
 	public static Logical between(String columnName, Date beginDate, Date endDate, DateFormat format) {
 		return new BetweenCondition(columnName, beginDate, endDate, format);
@@ -86,6 +109,15 @@ public abstract class Condition {
 	@SuppressWarnings("rawtypes")
 	public static Logical between(Enum columnName, Date beginDate, Date endDate, DateFormat format, int dateFieldToInclude) {
 		return new BetweenCondition(columnName.toString(), beginDate, endDate, format, dateFieldToInclude);
+	}	
+	
+	public static Logical like(String columnName, String value) {
+		return new LikeCondition(columnName, value);
+	}	
+	
+	@SuppressWarnings("rawtypes")
+	public static Logical like(Enum columnName, String value) {
+		return new LikeCondition(columnName, value);
 	}	
 	
 	

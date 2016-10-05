@@ -2,6 +2,7 @@ package com.cee.file.csv.criteria.condition;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import org.junit.Assert;
@@ -32,7 +33,7 @@ public class BetweenConditionTest extends ConditionalTest {
 		
 		Assert.assertNotNull(records);
 
-		/*for (CSVRecord csvRecord : records) {
+		for (CSVRecord csvRecord : records) {
 			System.out.println(csvRecord.getSingleValueFor(JiraAttribute.ISSUE_KEY));
 			System.out.println("-----------");
 			
@@ -42,7 +43,7 @@ public class BetweenConditionTest extends ConditionalTest {
 				System.out.println(workLog);
 			}
 				
-		}*/
+		}
 	}
 	
 
