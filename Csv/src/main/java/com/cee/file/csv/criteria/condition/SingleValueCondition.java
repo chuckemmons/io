@@ -43,8 +43,31 @@ public abstract class SingleValueCondition extends BaseCondition {
 	protected abstract boolean evaluateFloat(CSVRecord record);
 	
 	
-	protected abstract boolean evaluateDate(CSVRecord record);	
+	protected abstract boolean evaluateDate(CSVRecord record);
+	
+	
+	protected abstract String toStringForString();	
+	
+	
+	protected abstract String toStringForDate();	
+	
+	
+	protected abstract String toStringForFloat();		
 
+	
+	@Override
+	public String toString() {
+		if (stringValue != null) {
+			return toStringForString();
+		}
+		if (dateValue != null) {
+			return toStringForDate();
+		}
+		if (floatValue != null) {
+			return toStringForFloat();
+		}
+		return null;
+	}
 	
 	public boolean evaluate(CSVRecord record) {
 		if (stringValue != null) {

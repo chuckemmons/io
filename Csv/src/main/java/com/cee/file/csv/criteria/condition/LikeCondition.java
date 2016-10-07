@@ -21,7 +21,7 @@ public class LikeCondition extends SingleValueCondition implements Logical{
 	protected boolean evaluateString(CSVRecord record) {
 		List<String> recordValues = record.getAllValuesFor(columnName);
 		for (String recordValue : recordValues) {
-			if (stringValue.contains(recordValue)) {
+			if (recordValue.contains(stringValue)) {
 				return true;
 			}
 		}
@@ -37,6 +37,26 @@ public class LikeCondition extends SingleValueCondition implements Logical{
 	@Override
 	protected boolean evaluateDate(CSVRecord record) {
 		throw new RuntimeException("This exception will never be reached because date isn't implemented.");
+	}
+
+
+	@Override
+	protected String toStringForString() {
+		return columnName + " contains " + stringValue;
+	}
+
+
+	@Override
+	protected String toStringForDate() {
+		// TODO Auto-generated method stub
+		throw new RuntimeException("This exception will never be reached because date isn't implemented.");
+	}
+
+
+	@Override
+	protected String toStringForFloat() {
+		// TODO Auto-generated method stub
+		throw new RuntimeException("This exception will never be reached because float isn't implemented.");
 	}
 
 }

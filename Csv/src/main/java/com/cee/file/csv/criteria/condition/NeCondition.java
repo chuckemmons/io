@@ -99,4 +99,22 @@ public class NeCondition extends SingleValueCondition implements Logical {
 		return true;
 	}
 
+
+	@Override
+	protected String toStringForString() {
+		return columnName + " != " + stringValue;
+	}
+
+
+	@Override
+	protected String toStringForDate() {
+		return columnName + " != " + dateValue;
+	}
+
+
+	@Override
+	protected String toStringForFloat() {
+		return columnName + " != " + floatValue;
+	}
+
 }

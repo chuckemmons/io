@@ -17,4 +17,9 @@ public class Criteria {
 
 		return expression.evaluate(record);
 	}
+	
+	@Override
+	public String toString(){
+		return expression.toString();
+	}
 }

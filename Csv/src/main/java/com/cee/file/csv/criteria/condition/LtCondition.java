@@ -25,7 +25,14 @@ public class LtCondition extends SingleValueCondition implements Logical {
 	@Override
 	@Deprecated
 	protected boolean evaluateString(CSVRecord record) {
-		// TODO Auto-generated method stub
+		List<String> strValues = record.getAllValuesFor(columnName);
+		
+		for (String strValue : strValues) {			
+			if (strValue.compareTo(stringValue) < 0) {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	
@@ -57,6 +64,21 @@ public class LtCondition extends SingleValueCondition implements Logical {
 		}
 		
 		return false;
+	}
+
+	@Override
+	protected String toStringForString() {
+		return columnName + " < " + stringValue;
+	}
+
+	@Override
+	protected String toStringForDate() {
+		return columnName + " is before " + dateValue;
+	}
+
+	@Override
+	protected String toStringForFloat() {
+		return columnName + " < " + floatValue;
 	}
 
 }

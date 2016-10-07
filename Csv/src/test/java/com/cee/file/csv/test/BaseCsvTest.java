@@ -11,8 +11,8 @@ import com.cee.file.csv.CSVFormat;
 import com.cee.file.csv.CSVRecord;
 import com.cee.file.csv.criteria.Criteria;
 
-public class BaseCsvTest {
-
+public abstract class BaseCsvTest {
+	
 	protected String path = "JIRA1.csv";
 	
 	Iterable<CSVRecord> records;
@@ -36,6 +36,7 @@ public class BaseCsvTest {
 		CSVFormat csvFormat = CSVFormat.EXCEL.withHeader();
 		
 		try {
+			System.out.println("parsing for records with the following criteria:\n" + criteria);
 			records = csvFormat.parse(reader, criteria);
 		} 
 		catch (IOException ioe) {

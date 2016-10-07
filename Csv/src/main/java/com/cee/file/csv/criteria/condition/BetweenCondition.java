@@ -77,4 +77,9 @@ public class BetweenCondition extends BaseCondition implements Logical {
 		return date.equals(endDate) || date.before(endDate);
 	}
 
+	@Override
+	public String toString() {
+		return columnName + " is between " + beginDate + " and " + endDate;
+	}
+	
 }

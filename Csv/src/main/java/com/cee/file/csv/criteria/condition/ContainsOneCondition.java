@@ -44,15 +44,32 @@ public class ContainsOneCondition extends MultiValueCondition implements Logical
 	}
 
 	/*@Override
-	protected boolean evaluateFloat(CSVRecord record) {
+	protected boolean evaluateFloats(CSVRecord record) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	protected boolean evaluateDate(CSVRecord record) {
+	protected boolean evaluateDates(CSVRecord record) {
 		// TODO Auto-generated method stub
 		return false;
 	}*/
+
+	@Override
+	protected String toStringForStrings() {
+		return columnName + " contains one of the following: " + stringValues.toString();
+	}
+
+	@Override
+	protected String toStringForFloat() {
+		// TODO Auto-generated method stub
+		throw new RuntimeException("This exception will never be reached because float isn't implemented.");
+	}
+
+	@Override
+	protected String toStringForDate() {
+		// TODO Auto-generated method stub
+		throw new RuntimeException("This exception will never be reached because date isn't implemented.");
+	}
 
 }

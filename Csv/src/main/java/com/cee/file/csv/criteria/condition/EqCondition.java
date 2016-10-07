@@ -90,4 +90,19 @@ public class EqCondition extends SingleValueCondition implements Logical {
 		return false;
 	}
 
+	@Override
+	protected String toStringForString() {
+		return columnName + " == " + stringValue;
+	}
+
+	@Override
+	protected String toStringForDate() {
+		return columnName + " == " + dateValue;
+	}
+
+	@Override
+	protected String toStringForFloat() {
+		return columnName + " == " + floatValue;
+	}
+
 }

@@ -7,11 +7,45 @@ import com.cee.file.csv.criteria.Logical;
 
 public abstract class MultiValueCondition extends BaseCondition implements Logical {
 
-	protected Collection<String> stringValues;
+	protected Collection<String> stringValues;	
+	
 	
 	protected MultiValueCondition(String columnName, Collection<String> stringValues) {
 		super(columnName);
 		this.stringValues = stringValues;
+	}
+		
+	
+	protected abstract boolean evaluateStrings(CSVRecord record);
+	
+	
+	//protected abstract boolean evaluateFloat(CSVRecord record);
+	
+	
+	//protected abstract boolean evaluateDate(CSVRecord record);
+	
+	protected abstract String toStringForStrings();
+	
+	
+	protected abstract String toStringForFloat();
+	
+	
+	protected abstract String toStringForDate();
+	
+	
+	@Override
+	public String toString() {
+		if (stringValues != null) {
+			return toStringForStrings();
+		}
+		/*if (dateValue != null) {
+			return evaluateDate(record);
+		}
+		if (floatValue != null) {
+			return evaluateFloat(record);
+		}*/
+		// to make the compiler happy...
+		return null;
 	}
 	
 	@Override
@@ -28,14 +62,5 @@ public abstract class MultiValueCondition extends BaseCondition implements Logic
 		// to make the compiler happy...
 		return false;
 	}
-	
-	
-	protected abstract boolean evaluateStrings(CSVRecord record);
-	
-	
-	//protected abstract boolean evaluateFloat(CSVRecord record);
-	
-	
-	//protected abstract boolean evaluateDate(CSVRecord record);
 
 }

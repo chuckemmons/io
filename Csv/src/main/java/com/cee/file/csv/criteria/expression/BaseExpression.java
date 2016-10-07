@@ -2,7 +2,7 @@ package com.cee.file.csv.criteria.expression;
 
 import com.cee.file.csv.criteria.Logical;
 
-public class BaseExpression {
+public abstract class BaseExpression {
 	
 	protected Logical lhs;
 	protected Logical rhs;

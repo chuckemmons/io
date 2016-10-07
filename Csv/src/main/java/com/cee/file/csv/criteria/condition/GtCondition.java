@@ -58,8 +58,33 @@ public class GtCondition extends SingleValueCondition implements Logical {
 	@Override
 	@Deprecated
 	protected boolean evaluateString(CSVRecord record) {
-		// TODO Auto-generated method stub
+		List<String> strValues = record.getAllValuesFor(columnName);
+		
+		for (String strValue : strValues) {			
+			if (strValue.compareTo(stringValue) > 0) {
+				return true;
+			}
+		}
+		
 		return false;
+	}
+	
+
+	@Override
+	protected String toStringForString() {		
+		return columnName + " > " + stringValue;
+	}
+	
+
+	@Override
+	protected String toStringForDate() {		
+		return columnName + " is after " + dateValue;
+	}
+	
+
+	@Override
+	protected String toStringForFloat() {
+		return columnName + " > " + floatValue;
 	}
 
 }

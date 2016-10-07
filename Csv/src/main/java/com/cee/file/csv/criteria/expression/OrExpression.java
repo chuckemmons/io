@@ -15,5 +15,8 @@ public class OrExpression extends BaseExpression implements Logical {
 		return lhs.evaluate(record) || rhs.evaluate(record);
 	}
 
-	
+	@Override
+	public String toString() {
+		return "( " + lhs + " or " + rhs + " )";
+	}
 }

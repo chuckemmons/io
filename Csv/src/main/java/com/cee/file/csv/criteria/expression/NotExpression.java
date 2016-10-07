@@ -8,9 +8,16 @@ public class NotExpression extends BaseExpression implements Logical {
 	protected NotExpression(Logical logical) {
 		super(logical, null);
 	}
+	
+	
 	@Override
 	public boolean evaluate(CSVRecord record) {
 		return !lhs.evaluate(record);
+	}
+	
+	@Override
+	public String toString() {
+		return " not " + lhs.toString();
 	}
 
 }

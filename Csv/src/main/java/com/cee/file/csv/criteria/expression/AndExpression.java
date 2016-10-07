@@ -13,5 +13,10 @@ public class AndExpression extends BaseExpression implements Logical {
 	public boolean evaluate(CSVRecord record) {
 		return lhs.evaluate(record) && rhs.evaluate(record);
 	}
+	
+	@Override
+	public String toString() {
+		return "( " + lhs.toString() + " and " + rhs.toString() + " )";
+	}
 
 }
