@@ -56,7 +56,6 @@ public class GtCondition extends SingleValueCondition implements Logical {
 	 * @see com.cee.file.csv.criteria.condition.SingleValueCondition#evaluateString(com.cee.file.csv.CSVRecord)
 	 */
 	@Override
-	@Deprecated
 	protected boolean evaluateString(CSVRecord record) {
 		List<String> strValues = record.getAllValuesFor(columnName);
 		

@@ -23,7 +23,6 @@ public class LtCondition extends SingleValueCondition implements Logical {
 	
 
 	@Override
-	@Deprecated
 	protected boolean evaluateString(CSVRecord record) {
 		List<String> strValues = record.getAllValuesFor(columnName);
 		
